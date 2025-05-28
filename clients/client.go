@@ -306,7 +306,9 @@ func (m *MCPClient) ExecTools(ctx context.Context, name string, params map[strin
 	if err != nil {
 		return "", err
 	}
-
+	if result.IsError  {
+        return "", fmt.Errorf(utils.ReturnString(result))
+    	}
 	if _, ok := m.Conf.ToolsAfterFunc[name]; ok {
 		return m.Conf.ToolsAfterFunc[name](result)
 	}
